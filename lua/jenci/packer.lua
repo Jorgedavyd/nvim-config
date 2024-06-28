@@ -7,6 +7,8 @@ return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
+  use 'ThePrimeagen/harpoon'
+  
   -- Essential plugins
   use 'preservim/nerdtree'                 -- File explorer
   use 'tpope/vim-fugitive'                 -- Git integration

@@ -1,1 +1,7 @@
+require("jenci.packer")
+require("jenci.lsp")
+require("jenci.cmp")
+require("jenci.treesitter")
 require("jenci.remap")
+require("jenci.ale")
+require("jenci.dap")
