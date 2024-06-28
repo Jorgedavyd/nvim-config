@@ -7,7 +7,6 @@ return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
-  use 'ThePrimeagen/harpoon'
   
   -- Essential plugins
   use 'preservim/nerdtree'                 -- File explorer
@@ -36,6 +35,7 @@ return require('packer').startup(function(use)
   use 'tpope/vim-commentary'               -- Commenting
   use 'preservim/nerdcommenter'            -- Advanced commenting
 
-  -- Theme (optional)
-  use 'morhetz/gruvbox'
+  -- Themes
+  use 'theprimeagen/harpoon'
+  use { "catppuccin/nvim", as = "catppuccin" }
 end)
