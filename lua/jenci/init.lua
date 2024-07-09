@@ -1,11 +1,9 @@
 require("jenci.packer")
 require("jenci.theme")
 require("jenci.lsp")
-require("jenci.cmp")
 require("jenci.treesitter")
 require("jenci.plugin_binds")
 require("jenci.remap")
 require("jenci.ale")
 require("jenci.dap")
 require("jenci.ide")
-
