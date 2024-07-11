@@ -2,11 +2,9 @@
 
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
-
 return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
-
   
   -- Essential plugins
   use 'preservim/nerdtree'                 -- File explorer
@@ -26,6 +24,13 @@ return require('packer').startup(function(use)
   -- Syntax highlighting and linting
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
+  use({
+      "epwalsh/obsidian.nvim",
+      tag = "*",  -- recommended, use latest release instead of latest commit
+      requires = {
+          "nvim-lua/plenary.nvim",
+      },
+  })
   -- Debugging
   use 'mfussenegger/nvim-dap'              -- Debug Adapter Protocol
   use {
