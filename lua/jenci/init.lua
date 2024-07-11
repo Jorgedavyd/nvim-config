@@ -1,6 +1,7 @@
 require("jenci.packer")
 require("jenci.theme")
 require("jenci.lsp")
+require("jenci.tmux")
 require("jenci.treesitter")
 require("jenci.plugin_binds")
 require("jenci.remap")
