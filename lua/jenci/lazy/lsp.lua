@@ -66,7 +66,7 @@ return {
                         capabilities = capabilities,
                         settings = {
                             Lua = {
-                                runtime = { version = "Lua 5.1" },
+                                runtime = { version = "Lua 5.4" },
                                 diagnostics = {
                                     globals = { "bit", "vim", "it", "describe", "before_each", "after_each" },
                                 }
@@ -74,17 +74,15 @@ return {
                         }
                     }
                 end,
-		
-		["clangd"] = function()
-			local lspconfig = require('lspconfig')
+                ["clangd"] = function()
+                    local lspconfig = require('lspconfig')
 
-			-- C, C++, Objective-C, Objective-C++, CUDA, headers
-			lspconfig.clangd.setup {
-				on_attach = on_attach,
-				cmd = { "clangd", "--background-index" },
-				filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "h", "hpp" },
-			}
-		end,
+                    -- C, C++, Objective-C, Objective-C++, CUDA, headers
+                    lspconfig.clangd.setup {
+                        cmd = { "clangd", "--background-index" },
+                        filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "h", "hpp" },
+                    }
+                end,
             }
         })
 

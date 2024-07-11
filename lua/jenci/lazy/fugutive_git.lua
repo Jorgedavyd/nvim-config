@@ -1,13 +1,13 @@
 return {
     "tpope/vim-fugitive",
-    config = function() 
+    config = function()
         vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
 
         local Jenci_Fugitive = vim.api.nvim_create_augroup("Jenci_Fugitive", {})
 
         local autocmd = vim.api.nvim_create_autocmd
         autocmd("BufWinEnter", {
-            group = Jenci_Fugitive, 
+            group = Jenci_Fugitive,
             pattern = "*",
             callback = function()
                 if vim.bo.ft ~= "fugitive" then
@@ -34,7 +34,6 @@ return {
                 vim.keymap.set("n", "<leader>t", ":Git push -u origin ", opts);
             end,
         })
-
 
         vim.keymap.set("n", "gu", "<cmd>diffget //2<CR>")
         vim.keymap.set("n", "gh", "<cmd>diffget //3<CR>")
