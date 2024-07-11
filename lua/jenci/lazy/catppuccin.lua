@@ -3,9 +3,8 @@ return {
     name = "catppuccin",
     config = function()
         require("catppuccin").setup({
-            flavour = "machiato",
-            transparent_background=false,
-            show_end_of_buffer =false,
+            flavour = "mocha",
+            term_colors = true,
             integrations = {
                 cmp = true,
                 gitsigns = true,
@@ -46,5 +45,6 @@ return {
                 },
             }
         })
-    end,
+        vim.cmd('colorscheme catppuccin')
+    end
 }
