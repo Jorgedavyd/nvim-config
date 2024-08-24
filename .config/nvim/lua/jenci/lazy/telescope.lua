@@ -8,22 +8,38 @@ return {
     },
 
     config = function()
-        require('telescope').setup({})
+        require('telescope').setup({
+            defaults = {
+                sorting_strategy = "ascending",
+                layout_strategy = "horizontal",
+                layout_config = {
+                    prompt_position = "top",
+                    preview_cutoff = 120,
+                },
+                mappings = {
+                    i = {
+                        ["<C-j>"] = "move_selection_next",
+                        ["<C-k>"] = "move_selection_previous",
+                    },
+                },
+            }
+        })
 
         local builtin = require('telescope.builtin')
-        vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
-        vim.keymap.set('n', '<C-p>', builtin.git_files, {})
-        vim.keymap.set('n', '<leader>pws', function()
-            local word = vim.fn.expand("<cword>")
-            builtin.grep_string({ search = word })
+        local map = vim.keymap.set
+
+        map('n', '<leader>pf', builtin.find_files, {})
+        map('n', '<C-p>', builtin.git_files, {})
+        map('n', '<leader>pws', function()
+            builtin.grep_string({ search = vim.fn.expand("<cword>") })
         end)
-        vim.keymap.set('n', '<leader>pWs', function()
-            local word = vim.fn.expand("<cWORD>")
-            builtin.grep_string({ search = word })
+        map('n', '<leader>pWs', function()
+            builtin.grep_string({ search = vim.fn.expand("<cWORD>") })
         end)
-        vim.keymap.set('n', '<leader>ps', function()
+        map('n', '<leader>ps', function()
             builtin.grep_string({ search = vim.fn.input("Grep > ") })
         end)
-        vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
+        map('n', '<leader>vh', builtin.help_tags, {})
     end
 }
+
