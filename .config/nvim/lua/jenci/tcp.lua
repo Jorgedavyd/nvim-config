@@ -1,5 +1,10 @@
 local M = {}
 
+M.config = {
+    machines = {},
+    project_config_file = ".nvim_remote_config.json"
+}
+
 function M.load_project_config()
     local current_dir = vim.fn.getcwd()
     local config_path = current_dir .. '/' .. M.config.project_config_file

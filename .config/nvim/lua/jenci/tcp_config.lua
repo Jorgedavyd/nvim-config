@@ -1,4 +1,4 @@
-local tcp = require("tcp")
+local tcp = require("jenci.tcp")
 
 tcp.setup(
     {
