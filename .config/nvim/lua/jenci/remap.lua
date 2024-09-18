@@ -29,14 +29,3 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 --Default config
 vim.keymap.set('n', '<leader>w', '<cmd>w<CR>')
 vim.keymap.set('n', '<leader>q', '<cmd>q<CR>')
-
---Setting up env
-function SetWindowUtil (sign)
-    local command =  ("<C-a>%ssource env/bin/activate ; clear<C-m>"):format(sign)
-    local key = ("<C-%s>"):format(sign)
-    vim.keymap.set("n", key, command, {noremap = true, silent = true, desc = 'Open new panel with python environment'})
-end
-
-SetWindowUtil('/') -- vertical split
--- SetWindowUtil('-') -- horizontal split
-
