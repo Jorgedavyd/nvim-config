@@ -1,7 +1,7 @@
 require("jenci.set")
 require("jenci.remap")
 require("jenci.lazy_init")
-require("jenci.tcp_config")
+require("jenci.network")
 
 local augroup = vim.api.nvim_create_augroup
 local JenciGroup = augroup('jenci', {})

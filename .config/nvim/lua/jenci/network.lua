@@ -1,6 +1,6 @@
-local tcp = require("jenci.tcp")
+network = require("jenci.ssh") or require("jenci.tcp")
 
-tcp.setup(
+network.setup(
     {
         machines = {
             main = {
