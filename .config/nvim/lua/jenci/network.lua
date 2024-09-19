@@ -1,4 +1,4 @@
-network = require("jenci.ssh") or require("jenci.tcp")
+local network = require("jenci.ssh") or require("jenci.tcp")
 
 network.setup(
     {
