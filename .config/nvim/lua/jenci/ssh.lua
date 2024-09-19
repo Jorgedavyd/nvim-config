@@ -1,38 +1,46 @@
 local ssh = {}
 
+ssh.keymap = {}
+
 ssh.config = {
     machines = {},
     project_config_file = ".nvim_remote_config.json"
 }
 
-function ssh.general(script, cmd)
-    script = script .. " " .. cmd .. "&&"
-    return script
-end
-
-function ssh.connect(script, config)
+function ssh.call(cmd, config)
     local path = vim.fn.expand("%:p:h")
     local proj_name = path:match("projects/" .. "([^/]+)")
-    local cmd = ("ssh %s@%s && cd %s"):format("main", config.host, "~/projects/" .. proj_name)
-    return ssh.general(script, cmd)
+    local base_dir = "~/projects/"
+    local proj_dir = base_dir .. proj_name
+
+    cmd = ([[
+rsync -az --exclude "env" %s %s@%s:%s
+ssh %s@%s >> EOF
+cd %s
+git stash
+%s
+git restore .
+EOF
+        ]]):format(
+        proj_dir, "main", config.host, proj_dir, "main", config.host, proj_dir, cmd
+    )
+    vim.fn.system(cmd)
 end
 
-function ssh.close(script)
-    local cmd = "git restore ."
-    return ssh.general(script, cmd)
-end
-
-function ssh.keymap.set (letter, cmd, desc, config)
+function ssh.keymap.set (letter, desc, config)
     config = config or false
-    local script = ""
     if not config then
         print("Config not provided")
     end
     vim.keymap.set('n', ("<leader>m%s"):format(letter), function ()
-        script = ssh.connect(script, config)
-        script = ssh.general(script, cmd)
-        script = ssh.close(script)
-        vim.cmd(script)
+        local cmd = vim.ui.input({prompt = "command: "}, function (err)
+            if err then
+                print("Error encountered: " .. err)
+            else
+                print("Running on %s" .. config.host)
+            end
+        end)
+        ssh.call(cmd, config)
     end, {silent = false, noremap = true, desc = desc})
 end
 
@@ -53,21 +61,20 @@ function ssh.load_project_config()
 end
 
 function ssh.keymap.default (config)
-    local file_path = vim.fn.getcwd()
-    local func = function (letter, name, script)
-        ssh.keymap.set(letter, script .. file_path, ("Script automation with %s"):format(name), config.main)
+    local func = function (letter, name, mini_config)
+        ssh.keymap.set(letter, ("Script automation with %s"):format(name), mini_config)
     end
 
     local languages = {
-        {"lu", "Lua", "lua "},
-        {"cc", "C++", "g++ "},
-        {"cu", "CUDA", "nvcc "},
-        {"c", "C", "clang "},
-        {"py", "Python", "python3 -m "},
+        {"lu", "Lua"},
+        {"cc", "C++"},
+        {"cu", "CUDA"},
+        {"c", "C"},
+        {"py", "Python"},
     }
 
     for _, language in pairs(languages) do
-        func(language[1], language[2], language[3])
+        func(language[1], language[2], config.machines.main)
     end
 end
 
