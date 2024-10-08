@@ -1,6 +1,7 @@
 return {
         "nvim-neotest/neotest",
         dependencies = {
+            'mfussenegger/nvim-dap',
             "nvim-neotest/nvim-nio",
             "nvim-lua/plenary.nvim",
             "antoinemadec/FixCursorHold.nvim",
@@ -27,8 +28,20 @@ return {
                 }
             })
 
-            vim.keymap.set("n", "<leader>rt", function()
+            vim.keymap.set("n", "<leader>cr", function()
                 neotest.run.run()
             end)
+            vim.keymap.set("n", "<leader>co", function()
+                    neotest.output.open({ enter = true})
+                end)
+            vim.keymap.set("n", "<leader>cw", function()
+                    neotest.output.watch.watch()
+                end)
+            vim.keymap.set("n", "<leader>cs", function()
+                    neotest.summary.toggle()
+                end)
+            vim.keymap.set("n", "<leader>cd", function()
+                    neotest.run.run({vim.fn.expand("%"), strategy = "dap"})
+                end)
         end,
 }
