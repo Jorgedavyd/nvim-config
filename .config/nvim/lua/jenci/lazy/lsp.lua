@@ -20,8 +20,8 @@ return {
             "force",
             {},
             vim.lsp.protocol.make_client_capabilities(),
-            cmp_lsp.default_capabilities())
-
+            cmp_lsp.default_capabilities()
+        )
         require("fidget").setup({})
         require("mason").setup()
         require("mason-lspconfig").setup({
@@ -76,10 +76,7 @@ return {
                 end,
                 ["clangd"] = function()
                     local lspconfig = require('lspconfig')
-
-                    -- C, C++, Objective-C, Objective-C++, CUDA, headers
                     lspconfig.clangd.setup {
-                        cmd = { "clangd", "--background-index" },
                         filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "h", "hpp" },
                     }
                 end,
@@ -91,7 +88,7 @@ return {
         cmp.setup({
             snippet = {
                 expand = function(args)
-                    require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+                    require('luasnip').lsp_expand(args.body)
                 end,
             },
             mapping = cmp.mapping.preset.insert({
@@ -102,14 +99,13 @@ return {
             }),
             sources = cmp.config.sources({
                 { name = 'nvim_lsp' },
-                { name = 'luasnip' }, -- For luasnip users.
+                { name = 'luasnip' },
             }, {
                 { name = 'buffer' },
             })
         })
 
         vim.diagnostic.config({
-            -- update_in_insert = true,
             float = {
                 focusable = false,
                 style = "minimal",
