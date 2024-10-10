@@ -15,8 +15,11 @@ return {
         local dap = require("dap")
         local dapui = require("dapui")
         dapui.setup()
-        require("mason-tool-installer").setup({ensure_installed = {"codelldb", "debugpy"}})
-        require("dap-python").setup("python")
+        require("mason-tool-installer").setup({
+            ensure_installed = {"codelldb", "debugpy"}
+        })
+
+        require("dap-python").setup("/usr/bin/python3.12")
 
         dap.configurations.lua = {
             {
