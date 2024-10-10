@@ -25,23 +25,42 @@ return {
                 require("neotest-zig"),
                 require("neotest-gtest"),
                 require("neotest-haskell"),
+            },
+            discovery = {
+                filter_dir = function(name, rel_path, root)
+                    return name ~= "env"
+                end,
             }
         })
 
-        vim.keymap.set("n", "<leader>cr", function()
-            neotest.run.run()
-        end)
-        vim.keymap.set("n", "<leader>co", function()
-            neotest.output.open({ enter = true})
-        end)
-        vim.keymap.set("n", "<leader>cw", function()
-            neotest.output.watch.watch()
-        end)
-        vim.keymap.set("n", "<leader>cs", function()
+        local path = vim.fn.expand("%")
+        -- General level
+        vim.keymap.set("n", "<leader>ns", function()
             neotest.summary.toggle()
         end)
-        vim.keymap.set("n", "<leader>cd", function()
-            neotest.run.run({vim.fn.expand("%"), strategy = "dap"})
+
+        vim.keymap.set("n", "<leader>rl", function()
+            neotest.run.run_last({strategy = 'dap'})
+        end)
+
+        vim.keymap.set("n", "<leader>nr", function()
+            neotest.run.run({strategy = 'dap'})
+        end)
+
+        vim.keymap.set("n", "<leader>no", function()
+            neotest.output.open({
+                enter = true,
+                last_run = true,
+                auto_close = true,
+            })
+        end)
+
+        -- Path level
+        vim.keymap.set("n", "<leader>nir", function()
+            neotest.run.run({
+                path,
+                strategy = 'dap'
+            })
         end)
     end,
 }
