@@ -11,6 +11,6 @@ return {
         vim.keymap.set('n', '<C-t>', function () ui.nav_file(1) end, { noremap = true, silent = true })
         vim.keymap.set('n', '<C-y>', function () ui.nav_file(2) end, { noremap = true, silent = true })
         vim.keymap.set('n', '<C-n>', function () ui.nav_file(3) end, { noremap = true, silent = true })
-        vim.keymap.set('n', '<C-s>', function () ui.nav_file(3) end, { noremap = true, silent = true })
+        vim.keymap.set('n', '<C-s>', function () ui.nav_file(4) end, { noremap = true, silent = true })
     end,
 }

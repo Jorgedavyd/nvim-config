@@ -3,24 +3,22 @@ return {
     dependencies = {
         "rcarriga/nvim-dap-ui",
         "theHamsta/nvim-dap-virtual-text",
-        "mfussenegger/nvim-dap-python",
         "nvim-telescope/telescope-dap.nvim",
         "jbyuki/one-small-step-for-vimkind",
         "mrcjkb/rustaceanvim",
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
         "WhoIsSethDaniel/mason-tool-installer.nvim",
+        "leoluz/nvim-dap-go",
+        "mfussenegger/nvim-dap-python",
     },
     config = function()
-        local dap = require("dap")
-        local dapui = require("dapui")
-        dapui.setup()
+        local dap, dapui = require("dap"), require("dapui")
+        dapui.setup({dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"}})
         require("mason-tool-installer").setup({
-            ensure_installed = {"codelldb", "debugpy"}
+            ensure_installed = {"codelldb", "debugpy", "delve"}
         })
-
         require("dap-python").setup("/usr/bin/python3.12")
-
         dap.configurations.lua = {
             {
                 type = "nlua",
@@ -31,13 +29,12 @@ return {
         dap.adapters.nlua = function(callback, config)
             callback({ type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 })
         end
-
+        -- C, C++, Rust, Zig, CUDA setup
         dap.adapters.lldb = {
           type = 'executable',
           command = vim.fn.resolve(vim.fn.stdpath("data") .. "/mason/bin/codelldb"),
           name = 'lldb'
         }
-
         dap.configurations.cpp = {
             {
                 name = "Launch",
@@ -49,14 +46,15 @@ return {
                 cwd = '${workspaceFolder}',
                 stopOnEntry = false,
                 args = {},
+                runInTerminal = false,
             },
         }
-
+        dap.configurations.c = dap.configurations.cpp
         dap.configurations.rust = dap.configurations.cpp
         dap.configurations.zig = dap.configurations.cpp
         dap.configurations.cuda = dap.configurations.cpp
-        dap.configurations.c = dap.configurations.cpp
-
+        require('dap-go').setup()
+        -- Keymaps
         vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint)
         vim.keymap.set('n', '<leader>gb', dap.run_to_cursor)
         vim.keymap.set("n", "<space>?", function()
@@ -68,19 +66,15 @@ return {
         vim.keymap.set("n", "<F4>", dap.step_out)
         vim.keymap.set("n", "<F5>", dap.step_back)
         vim.keymap.set("n", "<F6>", dap.restart)
-
         dap.listeners.before.attach.dapui_config = function()
             dapui.open()
         end
-
         dap.listeners.before.launch.dapui_config = function()
             dapui.open()
         end
-
         dap.listeners.before.event_terminated.dapui_config = function()
             dapui.close()
         end
-
         dap.listeners.before.event_exited.dapui_config = function()
             dapui.close()
         end
