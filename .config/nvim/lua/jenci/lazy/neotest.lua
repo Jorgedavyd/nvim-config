@@ -7,7 +7,7 @@ return {
         "antoinemadec/FixCursorHold.nvim",
         "nvim-neotest/neotest-python",
         "nvim-neotest/neotest-plenary",
-        "nvim-neotest/neotest-rust",
+        "rouge8/neotest-rust",
         "marilari88/neotest-vitest",
         "lawrence-laz/neotest-zig",
         "alfaix/neotest-gtest",
