@@ -105,6 +105,13 @@ return {
                 ["<C-Space>"] = cmp.mapping.complete(),
             },
         })
+        --- Setup for SQL UI
+        cmp.setup.filetype({"sql"}, {
+            sources = {
+                { name = "vim-dadbod-completion" },
+                { name = "buffer" }
+            }
+        })
 
         local ls = require("luasnip")
         ls.config.set_config({
