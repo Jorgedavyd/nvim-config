@@ -15,10 +15,9 @@ return {
     config = function()
         local dap, dapui = require("dap"), require("dapui")
         dapui.setup({dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"}})
-        require("mason-tool-installer").setup({
-            ensure_installed = {"codelldb", "debugpy", "delve"}
-        })
+        require("mason-tool-installer").setup({ ensure_installed = {"codelldb", "debugpy", "delve"}})
         require("dap-python").setup("/usr/bin/python3.12")
+        require("nvim-dap-virtual-text").setup({})
         dap.configurations.lua = {
             {
                 type = "nlua",
@@ -56,7 +55,13 @@ return {
         require('dap-go').setup()
         -- Keymaps
         vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint)
+        vim.keymap.set('n', '<leader>cB', dap.clear_breakpoints)
         vim.keymap.set('n', '<leader>gb', dap.run_to_cursor)
+        vim.keymap.set('n', '<leader>cb', function ()
+            vim.ui.input({prompt = "Condition: "}, function (condition)
+                dap.toggle_breakpoint(condition)
+            end)
+        end)
         vim.keymap.set("n", "<space>?", function()
             dapui.eval(nil, { enter = true })
         end)
