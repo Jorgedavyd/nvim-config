@@ -8,7 +8,7 @@ return {
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-cmdline",
         "hrsh7th/nvim-cmp",
-        {"L3MON4D3/LuaSnip", build = "make install_jsregexp"},
+        "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
         "j-hui/fidget.nvim",
         "onsails/lspkind.nvim"
@@ -45,10 +45,9 @@ return {
                     }
                 end,
 
-                ["zls"] = function()
+                zls = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.zls.setup({
-                        capabilities = capabilities,
                         root_dir = lspconfig.util.root_pattern(".git", "build.zig", "zls.json"),
                         settings = {
                             zls = {
@@ -62,7 +61,7 @@ return {
                     vim.g.zig_fmt_autosave = 0
                 end,
 
-                ["lua_ls"] = function()
+                lua_ls = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.lua_ls.setup {
                         capabilities = capabilities,
@@ -76,7 +75,7 @@ return {
                     }
                 end,
 
-                ["clangd"] = function()
+                clangd = function()
                     local lspconfig = require('lspconfig')
                     lspconfig.clangd.setup {
                         capabilities = capabilities,
