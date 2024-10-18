@@ -112,7 +112,7 @@ return {
                     })
                 end,
 
-                python = function ()
+                pyright = function ()
                     local lspconfig = require("lspconfig")
                     lspconfig.pyright.setup({
                         capabilities = capabilities,
