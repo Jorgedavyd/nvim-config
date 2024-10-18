@@ -80,8 +80,53 @@ return {
                     lspconfig.clangd.setup {
                         capabilities = capabilities,
                         filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "h", "hpp" },
+                        cmd = {
+                            "clangd",
+                            "--header-insertion=never",
+                            "--clang-tidy",
+                            "--compile-commands-dir=build",
+                        },
+                        root_dir = lspconfig.util.root_pattern(".git", "compile_commands.json", "compile_flags.txt", "CMakeLists.txt"),
+                        settings = {
+                            clangd = {
+                                fallbackFlags = {
+                                    "--cuda-path=/opt/cuda",
+                                    "--std=c++20",
+                                    "--cuda-gpu-arch=sm_89",
+                                },
+                            },
+                        },
                     }
                 end,
+                rust_analyzer = function ()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.rust_analyzer.setup({
+                        capabilities = capabilities,
+                        settings = {
+                            rust_analyzer = {
+                                checkOnSave = {
+                                    command = 'clippy'
+                                }
+                            }
+                        }
+                    })
+                end,
+
+                python = function ()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.pyright.setup({
+                        capabilities = capabilities,
+                        settings = {
+                            python = {
+                                analysis = {
+                                    typeCheckingMode = "basic",
+                                    autoSearchPaths = true,
+                                    useLibraryCodeForTypes = true
+                                }
+                            }
+                        }
+                    })
+                end
             }
         })
 
